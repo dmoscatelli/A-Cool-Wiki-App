@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-before_action :find_article, only: [:show]
+before_action :find_article, only: [:show, :edit, :update, :destroy]
 before_action :authenticate_user!, except: [:index, :show]
 
 	def index
@@ -31,6 +31,11 @@ before_action :authenticate_user!, except: [:index, :show]
 
 
 	def update
+		if @article.save
+			redirect_to root_path
+		else
+			render 'edit'
+		end
 	end 
 
 
@@ -39,6 +44,8 @@ before_action :authenticate_user!, except: [:index, :show]
 
 
 	def destroy
+		@article.destroy
+		redirect_to root_path
 	end 
 
 
